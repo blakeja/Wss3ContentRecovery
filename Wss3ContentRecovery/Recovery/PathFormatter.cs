@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NLog;
 
 namespace Wss3ContentRecovery.Recovery
@@ -18,7 +19,7 @@ namespace Wss3ContentRecovery.Recovery
             if (dirName.Length + leafName.Length >= 240)
             {
                 var longPath = dirName + leafName;
-                var shortLeafName = leafName.Substring(0, 6) + Guid.NewGuid().ToString().Substring(0, 6);
+                var shortLeafName = leafName.Substring(0, 6) + "-" + Guid.NewGuid().ToString().Substring(0, 6);
                 path = dirName + shortLeafName;
 
                 Logger.Warn("Path too long: " + longPath);
@@ -28,7 +29,12 @@ namespace Wss3ContentRecovery.Recovery
             {
                 path = dirName + leafName;
             }
-            
+
+            if (path.Length >= 240)
+            {
+                throw new PathTooLongException("Path has length greater than 240 characters: '" + path);
+            }
+
             return path;
         }
     }

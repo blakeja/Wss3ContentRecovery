@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.IO;
 using NLog;
 using Wss3ContentRecovery.Models;
@@ -52,7 +53,21 @@ namespace Wss3ContentRecovery.Recovery
 
         private void GetSafePath()
         {
-            _path = PathFormatter.GetSafePath(_dirName, _leafName);
+            try
+            {
+                _path = PathFormatter.GetSafePath(_dirName, _leafName);
+            }
+            catch (PathTooLongException e)
+            {
+                if (_settings.WhatIf)
+                {
+                    Logger.Warn(e.Message);
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             WriteFile();
         }

@@ -26,11 +26,18 @@ namespace Wss3ContentRecovery
 
         static void Main(string[] args)
         {
-            Console.WriteLine();
+            try
+            {
+                Console.WriteLine();
 
-            _args = args;
+                _args = args;
 
-            InitializeNLog();
+                InitializeNLog();
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e);
+            }
         }
 
         private static void InitializeNLog()
