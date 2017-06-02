@@ -4,6 +4,10 @@ Original code and details can be found here:
 
 https://music.krichie.com/2008/07/06/exporting-site-content-from-a-sharepoint-content-database-for-recovery-purposes/
 
+## Download
+
+https://github.com/blakeja/Wss3ContentRecovery/releases/latest
+
 ## Quick Help
 
 ### Arguments
