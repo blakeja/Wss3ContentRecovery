@@ -8,6 +8,7 @@ namespace Wss3ContentRecovery.Recovery
 {
     public class FileWriter
     {
+        private readonly string _hostHeader;
         private readonly string _dirName;
         private readonly string _leafName;
         private readonly SqlDataReader _reader;
@@ -17,13 +18,15 @@ namespace Wss3ContentRecovery.Recovery
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private string _path;
+        private string _directory;
 
         #endregion
 
         #region Constructor
 
-        public FileWriter(string dirName, string leafName, SqlDataReader reader, SettingsModel settings)
+        public FileWriter(string hostHeader, string dirName, string leafName, SqlDataReader reader, SettingsModel settings)
         {
+            _hostHeader = hostHeader;
             _dirName = dirName;
             _leafName = leafName;
             _reader = reader;
@@ -39,13 +42,15 @@ namespace Wss3ContentRecovery.Recovery
 
         private void CreateDirectory()
         {
+            _directory = _hostHeader + "\\" + _dirName;
+
             if (_settings.WhatIf)
             {
-                Logger.Info("Skipping " + _dirName + " directory creation due to -whatif");
+                Logger.Info("Skipping " + _directory + " directory creation due to -whatif");
             }
             else
             {
-                DirectoryCreator.Create(_dirName);
+                DirectoryCreator.Create(_directory);
             }
 
             GetSafePath();
@@ -55,7 +60,7 @@ namespace Wss3ContentRecovery.Recovery
         {
             try
             {
-                _path = PathFormatter.GetSafePath(_dirName, _leafName);
+                _path = PathFormatter.GetSafePath(_directory, _leafName);
             }
             catch (PathTooLongException e)
             {

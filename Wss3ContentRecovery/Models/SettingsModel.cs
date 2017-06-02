@@ -3,10 +3,11 @@
     public class SettingsModel
     {
         public string Query = @"
-                select ad.SiteId, ad.Id, ad.DirName, ad.LeafName, ads.Content
-                from AllDocs ad, AllDocStreams ads
+                select ad.SiteId, ad.Id, ad.DirName, ad.LeafName, ads.Content, s.HostHeader
+                from AllDocs ad, AllDocStreams ads, Sites s
                 where ad.SiteId = ads.SiteId
                     and ad.Id = ads.Id
+                    and s.Id = ad.SiteId
                     and ads.Content IS NOT NULL
                     and ad.DirName IS NOT NULL
                 order by DirName";

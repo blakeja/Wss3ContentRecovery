@@ -12,22 +12,22 @@ namespace Wss3ContentRecovery.Recovery
 
         #endregion
 
-        public static string GetSafePath(string dirName, string leafName)
+        public static string GetSafePath(string directory, string leafName)
         {
-            string path;
+            var path = directory + leafName;
 
-            if (dirName.Length + leafName.Length >= 240)
+            if (path.Length >= 240)
             {
-                var longPath = dirName + leafName;
-                var shortLeafName = leafName.Substring(0, 6) + "-" + Guid.NewGuid().ToString().Substring(0, 6);
-                path = dirName + shortLeafName;
+                Logger.Warn("Path too long: " + path);
 
-                Logger.Warn("Path too long: " + longPath);
+                var shortLeafName = leafName.Substring(0, 6) + "-" + Guid.NewGuid().ToString().Substring(0, 6);
+                path = directory + shortLeafName;
+
                 Logger.Info("Using path with shortened leaf name: " + path);
             }
             else
             {
-                path = dirName + leafName;
+                path = directory + leafName;
             }
 
             if (path.Length >= 240)

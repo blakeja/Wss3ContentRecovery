@@ -10,13 +10,13 @@ namespace Wss3ContentRecovery.Recovery
 
         #endregion
 
-        public static void Create(string dirName)
+        public static void Create(string directory)
         {
-            if (!System.IO.Directory.Exists(dirName))
+            if (!System.IO.Directory.Exists(directory))
             {
-                System.IO.Directory.CreateDirectory(dirName);
+                System.IO.Directory.CreateDirectory(directory);
 
-                Logger.Info("Created directory: " + dirName);
+                Logger.Info("Created directory: " + directory);
             }
         }
     }

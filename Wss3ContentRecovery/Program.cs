@@ -114,16 +114,11 @@ namespace Wss3ContentRecovery
                     {
                         while (reader.Read())
                         {
+                            var hostHeader = Convert.ToString(reader["HostHeader"]);
                             var dirName = Convert.ToString(reader["DirName"]);
                             var leafName = Convert.ToString(reader["LeafName"]);
-
-                            if (dirName == "")
-                            {
-                                Logger.Warn("Found empty dirName in database, skipping");
-                                continue;
-                            }
-
-                            var fileWriter = new FileWriter(dirName, leafName, reader, _settings);
+                            
+                            var fileWriter = new FileWriter(hostHeader, dirName, leafName, reader, _settings);
                             fileWriter.Write();
                         }
                     }
