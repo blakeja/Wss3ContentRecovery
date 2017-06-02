@@ -17,7 +17,7 @@ namespace Wss3ContentRecovery.Recovery
         #region Fields
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private string _path;
+        private string _filepath;
         private string _directory;
 
         #endregion
@@ -60,7 +60,7 @@ namespace Wss3ContentRecovery.Recovery
         {
             try
             {
-                _path = PathFormatter.GetSafePath(_directory, _leafName);
+                _filepath = PathFormatter.GetSafePath(_directory, _leafName);
             }
             catch (PathTooLongException e)
             {
@@ -81,13 +81,13 @@ namespace Wss3ContentRecovery.Recovery
         {
             if (_settings.WhatIf)
             {
-                Logger.Info("Skipping " + _leafName + " file write due to -whatif");
+                Logger.Info("Skipping " + _filepath + " file write due to -whatif");
             }
             else
             {
-                Logger.Info("Writing file " + _leafName);
+                Logger.Info("Writing file " + _filepath);
 
-                using (var fileStream = new FileStream(_path, FileMode.Create, FileAccess.Write))
+                using (var fileStream = new FileStream(_filepath, FileMode.Create, FileAccess.Write))
                 {
                     using (var writer = new BinaryWriter(fileStream))
                     {
@@ -106,7 +106,7 @@ namespace Wss3ContentRecovery.Recovery
                     }
                 }
 
-                Logger.Info("Finished writing file " + _leafName);
+                Logger.Info("Finished writing file " + _filepath);
             }
         }
     }

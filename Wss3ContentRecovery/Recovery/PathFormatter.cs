@@ -14,6 +14,11 @@ namespace Wss3ContentRecovery.Recovery
 
         public static string GetSafePath(string directory, string leafName)
         {
+            if (!directory.EndsWith("/") && !directory.EndsWith("\\"))
+            {
+                directory = directory + "\\";
+            }
+
             var path = directory + leafName;
 
             if (path.Length >= 240)
@@ -27,7 +32,7 @@ namespace Wss3ContentRecovery.Recovery
             }
             else
             {
-                path = directory + leafName;
+                Logger.Info("Using path: " + path);
             }
 
             if (path.Length >= 240)
