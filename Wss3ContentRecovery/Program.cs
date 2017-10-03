@@ -29,7 +29,6 @@ namespace Wss3ContentRecovery
             try
             {
                 Console.WriteLine();
-
                 _args = args;
 
                 InitializeNLog();
