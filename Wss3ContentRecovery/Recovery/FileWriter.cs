@@ -67,8 +67,9 @@ namespace Wss3ContentRecovery.Recovery
                 if (_settings.WhatIf)
                 {
                     Logger.Warn(e.Message);
-                    return;
                 }
+
+                return;
             }
 
             WriteFile();
