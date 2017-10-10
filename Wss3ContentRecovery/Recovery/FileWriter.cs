@@ -50,7 +50,19 @@ namespace Wss3ContentRecovery.Recovery
             }
             else
             {
-                DirectoryCreator.Create(_directory);
+                try
+                {
+                    DirectoryCreator.Create(_directory);
+                }
+                catch (PathTooLongException e)
+                {
+                    if (_settings.WhatIf)
+                    {
+                        Logger.Warn(e.Message);
+                    }
+
+                    return;
+                }
             }
 
             GetSafePath();
